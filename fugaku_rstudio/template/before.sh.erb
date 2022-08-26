@@ -1,0 +1,24 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+port=$(find_port ${host})
+
+# Define a password and export it for RStudio authentication
+password="$(create_passwd 16)"
+export RSTUDIO_PASSWORD="${password}"
+
+<%-
+  require 'securerandom'
+  csrf_token = SecureRandom.uuid
+-%>
+export csrf_token="<%= csrf_token %>"
+
+######################
+# When /home directory is nfs-mounted with lookupcache=none option,
+# the error "/usr/bin/env: bad interpreter: Text file busy" occurs.
+# This is because that the script.sh is not finished being copied in a compute node.
+# To prevent that, change to a file with a different name in the compute node.
+######################
+cp script.sh tmp.sh
+mv tmp.sh script.sh

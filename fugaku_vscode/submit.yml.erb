@@ -1,0 +1,28 @@
+script:
+  job_name: ood_vscode
+  <%- if cluster == "prepost" then -%>
+  queue_name: <%= custom_queue %>
+  gpus_per_node: <%= gpus_per_node %>
+  <%- end -%>
+  <%- if email.present? -%>
+  email: <%= email %>
+  email_on_started: true
+  <%- end -%>
+  native:
+  <%- if cluster == "prepost" then -%>
+  <%- if required_memory.present? -%>
+  - "--mem"
+  - "<%= required_memory %>G"
+  <%- end -%> 
+  - "-n"
+  - "<%= num_cores.blank? ? 1 : num_cores.to_i %>"
+  <%- elsif cluster == "fugaku" -%>
+  - "-L node=1,jobenv=singularity --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
+  <%- if group.present? -%>
+  - "-g"
+  - "<%= group %>"
+  <%- end -%>
+  <%- end -%>
+batch_connect:
+  template: "basic"
+  

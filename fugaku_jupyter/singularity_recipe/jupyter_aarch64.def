@@ -1,0 +1,22 @@
+Bootstrap: library
+#From: rockylinux:latest
+From: rockylinux:8.6
+  
+%post
+        dnf -y install hostname gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl libcgroup boost boost-devel
+        dnf -y install epel-release dnf-plugins-core wget
+        dnf config-manager --set-enabled powertools
+        dnf -y install http://repos.openhpc.community/OpenHPC/2/CentOS_8/aarch64/ohpc-release-2-1.el8.aarch64.rpm
+        dnf -y install lmod-ohpc
+        #
+        dnf -y install python39-pip python39-devel python39-numpy python39-scipy python3-matplotlib libffi-devel
+        dnf -y groupinstall "Development Tools"
+        pip3.9 install packaging
+        dnf -y install tar
+        curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
+        dnf -y install nodejs
+        pip3.9 install jupyterlab
+        pip3.9 uninstall -y jupyterlab
+        #
+        dnf clean all
+        rm -rf /var/cache/yum/*

@@ -1,0 +1,20 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+export port=$(find_port ${host})
+
+# Export compute node the script is running on
+export host="${host}"
+
+# Generate SHA1 encrypted password (requires OpenSSL installed)
+export password="$(create_passwd 16)"
+
+######################
+# When /home directory is nfs-mounted with lookupcache=none option,
+# the error "/usr/bin/env: bad interpreter: Text file busy" occurs.
+# This is because that the script.sh is not finished being copied in a compute node.
+# To prevent that, change to a file with a different name in the compute node.
+######################
+cp script.sh tmp.sh
+mv tmp.sh script.sh

@@ -1,0 +1,75 @@
+<%-
+  groups=`groups`.split(" ")
+  delete_groups = ["f-op", "fugaku"]
+  delete_groups.each do |g|
+    groups.delete(g)
+  end
+-%>
+---
+title: "Remote Desktop"
+description: This app will launch an Xfce desktop.
+attributes:
+  desktop: "xfce"
+  cluster:
+    label: "System"
+    widget: "select"
+    options:
+      - [ "fugaku", "fugaku", data-hide-num-cores: true, data-hide-custom-queue: true, data-hide-required-memory: true, data-hide-gpus-per-node: true ]
+      - [ "prepost", "prepost", data-hide-group: true ]
+  group:
+    label: Resource Group
+    widget: "select"
+    options:
+    <%- groups.each do |group| -%>
+      - "<%= group %>"
+    <%- end -%>
+  bc_num_hours:
+    label: "Number of hours"
+    value: 1
+    widget: "number_field"
+    required: true
+    min: 1
+    max: 24
+    step: 1
+  num_cores:
+    widget: "number_field"
+    label: "Number of CPU cores"
+    value: 1
+    min: 1
+    max: 224
+    step: 1
+  custom_queue:
+    label: Queue
+    widget: "select"
+    options:
+      - [ "gpu1", "gpu1", data-max-bc-num-hours:  3 ]
+      - [ "gpu2", "gpu2", data-max-bc-num-hours: 24 ]
+      - [ "mem1", "mem1", data-max-bc-num-hours:  3 ]
+      - [ "mem2", "mem2", data-max-bc-num-hours: 24 ]
+  required_memory:
+    widget: "number_field"
+    label: "Required Memory"
+    value: 5
+    min: 5
+    max: 6045
+    step: 1
+  gpus_per_node:
+    widget: "number_field"
+    label: "Number of GPUs (0-2)"
+    value: 0
+    min: 0
+    max: 2
+    step: 1
+  email:
+    widget: "email_field"
+form:
+  - desktop
+  - cluster
+  - custom_queue
+  - group
+  - bc_num_hours
+  - num_cores
+  - gpus_per_node
+  - required_memory
+  - email
+  - bc_vnc_resolution

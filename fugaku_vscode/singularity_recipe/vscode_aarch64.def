@@ -1,0 +1,15 @@
+Bootstrap: library
+#From: rockylinux:latest
+From: rockylinux:8.6
+ 
+%post
+        dnf -y install hostname gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl libcgroup boost boost-devel
+        dnf -y install epel-release dnf-plugins-core wget
+        dnf config-manager --set-enabled powertools
+        dnf -y install http://repos.openhpc.community/OpenHPC/2/CentOS_8/aarch64/ohpc-release-2-1.el8.aarch64.rpm
+        dnf -y install lmod-ohpc
+        #
+        dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-arm64.rpm
+        #
+        dnf clean all
+        rm -rf /var/cache/yum/*

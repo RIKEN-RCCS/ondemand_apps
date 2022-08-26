@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+IMAGE=/home/apps/singularity/ondemand/jupyter_`arch`.sif
+echo "TIMING - Starting main script at: $(date)"
+cd "${HOME}"
+echo "TIMING - Starting jupyter at: $(date)"
+
+set -x
+export LANG=C
+export SINGULARITYENV_XDG_DATA_HOME=${HOME}/.ondemand/jupyter/`arch`
+export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
+export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
+export SINGULARITY_BINDPATH=/data,/vol0004
+mkdir -p $SINGULARITYENV_TMPDIR
+NV_OPTION=""
+CUDA_VERSION=11.5
+if [ -e /usr/local/cuda-$CUDA_VERSION ]; then
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/local/cuda-$CUDA_VERSION:/usr/local/cuda
+    NV_OPTION="--nv"
+fi
+if [ -d /opt/intel ]; then
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/intel
+fi
+
+# https://qiita.com/ronin_gw/items/cdf8112b61649ca455f5
+PYTHONUSERBASE=${SINGULARITYENV_XDG_DATA_HOME}
+export SINGULARITYENV_PYTHONUSERBASE=${PYTHONUSERBASE}
+export SINGULARITYENV_JUPYTER_DATA_DIR=${PYTHONUSERBASE}/share/jupyter
+time singularity exec ${NV_OPTION} ${IMAGE} pip3.9 install -U jupyterlab --user
+singularity exec ${NV_OPTION} ${IMAGE} ${PYTHONUSERBASE}/bin/jupyter-lab --config="${CONFIG_FILE}"
