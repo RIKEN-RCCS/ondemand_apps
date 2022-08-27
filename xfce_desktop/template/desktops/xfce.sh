@@ -36,6 +36,19 @@ else
     "${TERM_CONFIG}"
 fi
 
+# Set custom Directories
+USER_DIRS_CONFIG="${HOME}/.config/user-dirs.dirs"
+if [[ ! -e "${USER_DIRS_CONFIG}" ]]; then
+    xdg-user-dirs-update --set DESKTOP ${HOME}
+    xdg-user-dirs-update --set DOCUMENTS ${HOME}
+    xdg-user-dirs-update --set DOWNLOAD ${HOME}
+    xdg-user-dirs-update --set MUSIC ${HOME}
+    xdg-user-dirs-update --set PICTURES ${HOME}
+    xdg-user-dirs-update --set PUBLICSHARE ${HOME}
+    xdg-user-dirs-update --set TEMPLATES ${HOME}
+    xdg-user-dirs-update --set VIDEOS ${HOME}
+fi
+
 # launch dbus first through eval becuase it can conflict with a conda environment
 # see https://github.com/OSC/ondemand/issues/700
 eval $(dbus-launch --sh-syntax)
