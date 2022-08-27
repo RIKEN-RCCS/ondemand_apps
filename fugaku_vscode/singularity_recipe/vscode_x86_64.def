@@ -6,10 +6,8 @@ From: rockylinux:8.6
         dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel
         dnf -y install epel-release dnf-plugins-core wget
         dnf config-manager --set-enabled powertools
-        dnf -y install http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
-        dnf -y install lmod-ohpc
+        dnf -y install Lmod
         #
         dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-amd64.rpm
         #
         dnf clean all
-        rm -rf /var/cache/yum/*

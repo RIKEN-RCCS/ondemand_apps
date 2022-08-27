@@ -6,17 +6,18 @@ From: rockylinux:8.6
         dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel
         dnf -y install epel-release dnf-plugins-core wget
         dnf config-manager --set-enabled powertools
-        dnf -y install xorg-x11-apps hostname evince eog glx-utils systemd-libs sssd python2-pip
-        dnf -y install http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
-        dnf -y install lmod-ohpc
+        dnf -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod
         #
-        dnf -y groupinstall 'Development Tools' 'Base' 'Infiniband Support' 'Xfce' 'base-x' 'Internet Browser'
+        dnf --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
         pip2 install ts
         dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
         dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.3-1.el8.x86_64.rpm
-        dnf remove -y tigervnc-server python2-pip mate-power-manager xfce4-screensaver
+        dnf remove -y python2-pip xfce4-screensaver
         #
-        dnf install -y paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
+        cd /opt
+        wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
+        tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+        rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+        ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
         #
         dnf clean all
-        rm -rf /var/cache/yum/*
