@@ -39,7 +39,7 @@ batch_connect:
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/.ondemand/xfce_desktop/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-    export SINGULARITY_BINDPATH=/data,/vol0004
+    export SINGULARITY_BINDPATH=/data,/work
     mkdir -p $SINGULARITYENV_TMPDIR
     NV_OPTION=""
     CUDA_VERSION=11.5
@@ -47,9 +47,9 @@ batch_connect:
         export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/local/cuda-$CUDA_VERSION:/usr/local/cuda
         NV_OPTION="--nv"
     fi
-    if [ -d /opt/intel ]; then
-      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/intel
-    fi
+    for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
+        export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
+    done
 
     IMAGE=/home/apps/singularity/ondemand/xfce_desktop_`arch`.sif
     singularity run ${NV_OPTION} ${IMAGE} <%= staged_root %>/container.sh
