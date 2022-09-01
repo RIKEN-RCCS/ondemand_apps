@@ -27,6 +27,7 @@ From: rockylinux:8.6
         cd ../
         rm -rf 2.2.3.tar.gz turbovnc-2.2.3
         dnf remove -y python2-pip xfce4-screensaver
+        update-alternatives --set python /usr/bin/python3
         #
         dnf install -y paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
         #
