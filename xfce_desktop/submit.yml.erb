@@ -39,7 +39,7 @@ batch_connect:
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/xfce_desktop/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-    export SINGULARITY_BINDPATH=/data,/work,/vol0004
+    export SINGULARITY_BINDPATH=/data,/work,/vol0004,/lib64:/lib64.host
     mkdir -p $SINGULARITYENV_TMPDIR
     NV_OPTION=""
     CUDA_VERSION=11.5

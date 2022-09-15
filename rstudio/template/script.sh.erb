@@ -36,7 +36,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/rstudio/`arch`
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/vol0004,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
+export SINGULARITY_BINDPATH=/data,/work,/vol0004,/lib64:/lib64.host,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
 mkdir -p $SINGULARITYENV_TMPDIR/lib
 mkdir -p $SINGULARITYENV_TMPDIR/rstudio-server
 python3 -c 'from uuid import uuid4; print(uuid4())' > "$SINGULARITYENV_TMPDIR/rstudio-server/secure-cookie-key"
