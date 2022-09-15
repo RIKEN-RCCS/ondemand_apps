@@ -17,7 +17,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${CODE_SERVER_DATAROOT}
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/vol0004,/lib64:/lib64.host
+export SINGULARITY_BINDPATH=/data,/work,/lib64:/lib64.host
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
 CUDA_VERSION=11.5
@@ -27,6 +27,9 @@ if [ -e /usr/local/cuda-$CUDA_VERSION ]; then
 fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
     export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
+done
+for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006; do
+    [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
 done
 
 singularity exec ${NV_OPTION} ${IMAGE} code-server \
