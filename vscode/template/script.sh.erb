@@ -1,6 +1,12 @@
 #!/usr/bin/bash -l
 
-IMAGE=/home/apps/singularity/ondemand/vscode_`arch`.sif
+ARCH=`arch`
+if [ $ARCH = aarch64 ]; then
+  IMAGE=/home/apps/singularity/ondemand/vscode_${ARCH}.sif
+else
+  IMAGE=/home/apps/singularity/ondemand/vscode_ubi84_${ARCH}.sif
+fi
+
 CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/`arch`"
 mkdir -p "$CODE_SERVER_DATAROOT/extensions"
 
@@ -17,7 +23,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${CODE_SERVER_DATAROOT}
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/lib64:/lib64.host
+export SINGULARITY_BINDPATH=/data,/work
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
 CUDA_VERSION=11.5

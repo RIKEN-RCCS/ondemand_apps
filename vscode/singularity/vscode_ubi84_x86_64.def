@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: registry.access.redhat.com/ubi8:8.4-213
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget
+  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf -y install Lmod
+  dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-amd64.rpm
+  #
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo
+  

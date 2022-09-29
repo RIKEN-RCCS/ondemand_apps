@@ -36,10 +36,18 @@ batch_connect:
     CTRSCRIPT
      
     export LANG=C
+
+    ARCH=`arch`
+    if [ $ARCH = aarch64 ]; then
+      IMAGE=/home/apps/singularity/ondemand/xfce_desktop_${ARCH}.sif
+    else
+      IMAGE=/home/apps/singularity/ondemand/xfce_desktop_ubi84_${ARCH}.sif
+    fi
+
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/xfce_desktop/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-    export SINGULARITY_BINDPATH=/data,/work,/lib64:/lib64.host
+    export SINGULARITY_BINDPATH=/data,/work
     mkdir -p $SINGULARITYENV_TMPDIR
     NV_OPTION=""
     CUDA_VERSION=11.5
@@ -54,6 +62,5 @@ batch_connect:
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
 
-    IMAGE=/home/apps/singularity/ondemand/xfce_desktop_`arch`.sif
     singularity run ${NV_OPTION} ${IMAGE} <%= staged_root %>/container.sh
     

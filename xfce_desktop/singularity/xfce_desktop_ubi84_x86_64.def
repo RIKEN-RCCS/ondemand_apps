@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: registry.access.redhat.com/ubi8:8.4-213
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget
+  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
+  dnf --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  pip2 install ts
+  dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
+  dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.3-1.el8.x86_64.rpm
+  dnf remove -y python2-pip xfce4-screensaver
+  update-alternatives --set python /usr/bin/python3
+  cd /opt
+  wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
+  tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
+  #
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo
+  

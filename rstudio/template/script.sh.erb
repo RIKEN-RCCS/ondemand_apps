@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-IMAGE=/home/apps/singularity/ondemand/rstudio_`arch`.sif
+ARCH=`arch`
+if [ $ARCH = aarch64 ]; then
+  IMAGE=/home/apps/singularity/ondemand/rstudio_${ARCH}.sif
+else
+  IMAGE=/home/apps/singularity/ondemand/rstudio_ubi84_${ARCH}.sif
+fi
 
 # Load the required environment
 setup_env () {
@@ -36,7 +41,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/rstudio/`arch`
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/lib64:/lib64.host,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
+export SINGULARITY_BINDPATH=/data,/work,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
 mkdir -p $SINGULARITYENV_TMPDIR/lib
 mkdir -p $SINGULARITYENV_TMPDIR/rstudio-server
 python3 -c 'from uuid import uuid4; print(uuid4())' > "$SINGULARITYENV_TMPDIR/rstudio-server/secure-cookie-key"

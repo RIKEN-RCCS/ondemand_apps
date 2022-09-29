@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-IMAGE=/home/apps/singularity/ondemand/jupyter_`arch`.sif
+ARCH=`arch`
+if [ $ARCH = aarch64 ]; then
+  IMAGE=/home/apps/singularity/ondemand/jupyter_${ARCH}.sif
+else
+  IMAGE=/home/apps/singularity/ondemand/jupyter_ubi84_${ARCH}.sif
+fi
 echo "TIMING - Starting main script at: $(date)"
 cd "${HOME}"
 echo "TIMING - Starting jupyter at: $(date)"
@@ -10,7 +15,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/jupyter/`arch`
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/lib64:/lib64.host
+export SINGULARITY_BINDPATH=/data,/work
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
 CUDA_VERSION=11.5
