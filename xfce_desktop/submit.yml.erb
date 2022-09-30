@@ -29,10 +29,11 @@ batch_connect:
   websockify_cmd: '/usr/bin/websockify'
   script_wrapper: |
     cat << "CTRSCRIPT" > <%= staged_root %>/container.sh
+    #!/bin/bash
     export PATH="$PATH:/opt/TurboVNC/bin"
     export PATH="$PATH:/opt/ParaView/bin"
     export LANG=C
-    %s  
+    %s
     CTRSCRIPT
      
     export LANG=C
@@ -62,5 +63,6 @@ batch_connect:
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
 
+    chmod +x <%= staged_root %>/container.sh
     singularity run ${NV_OPTION} ${IMAGE} <%= staged_root %>/container.sh
     
