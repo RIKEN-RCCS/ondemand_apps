@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: registry.access.redhat.com/ubi8:8.6-943
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+  
+%post
+  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf -y install Lmod R
+  dnf -y install ant tar git bzip2 libxml2-devel pandoc sudo mlocate soci-sqlite3-devel
+  wget https://github.com/rstudio/rstudio/archive/refs/tags/v2022.02.1+461.tar.gz
+  tar xfz v2022.02.1+461.tar.gz
+  cd rstudio-2022.02.1-461/dependencies/common/
+  ./install-dictionaries
+  ./install-mathjax
+  ./install-yaml-cpp
+  ./install-boost
+  ./install-packages
+  cd ../linux
+  grep -v xml-commons-apis ./install-dependencies-yum >  ./install-dependencies-yum-new
+  sh ./install-dependencies-yum-new
+  cd ../../
+  mkdir build; cd build
+  CXXFLAGS="-march=native" cmake .. -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/lib/rstudio-server
+  # If too many cores, it will run out of memory.
+  make -j 24; make install
+ cd ../../
+  rm -rf v2022.02.1+461.tar.gz rstudio-2022.02.1-461
+  #
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo

@@ -1,0 +1,37 @@
+Bootstrap: docker
+From: registry.access.redhat.com/ubi8:8.6-943
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf -y install xorg-x11-apps evince glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
+  dnf --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  pip2 install ts
+  dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
+  dnf -y install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel
+  wget https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/2.1.3.tar.gz
+  tar xfz 2.1.3.tar.gz
+  cd libjpeg-turbo-2.1.3
+  cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/libjpeg-turbo -DWITH_JAVA=1
+  make install
+  cd ../
+  rm -rf 2.1.3.tar.gz libjpeg-turbo-2.1.3
+  wget https://github.com/TurboVNC/turbovnc/archive/refs/tags/2.2.3.tar.gz
+  tar xfz 2.2.3.tar.gz
+  cd turbovnc-2.2.3
+  cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/TurboVNC
+  make install
+  cd ../
+  rm -rf 2.2.3.tar.gz turbovnc-2.2.3
+  dnf remove -y python2-pip xfce4-screensaver
+  update-alternatives --set python /usr/bin/python3
+  dnf install -y paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
+  #
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo
+  
