@@ -33,7 +33,7 @@ From: registry.access.redhat.com/ubi8:8.6-943
   dnf --releasever=8.6 -y install paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
   #
   # For Fujitsu TCS
-  dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  dnf --releasever=8.6 install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*

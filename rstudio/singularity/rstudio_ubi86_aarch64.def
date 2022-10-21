@@ -30,7 +30,7 @@ From: registry.access.redhat.com/ubi8:8.6-943
   rm -rf v2022.02.1+461.tar.gz rstudio-2022.02.1-461
   #
   # For Fujitsu TCS
-  dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  dnf --releasever=8.6 install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
