@@ -21,6 +21,9 @@ From: registry.access.redhat.com/ubi8:8.4-213
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
   #
+  # Packages for Fujitsu TCS
+  dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo

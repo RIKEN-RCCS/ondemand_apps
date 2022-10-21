@@ -11,6 +11,9 @@ From: registry.access.redhat.com/ubi8:8.4-213
   dnf -y install Lmod R
   dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2022.02.1-461-x86_64.rpm
   #
+  # Packages for Fujitsu TCS
+  dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
