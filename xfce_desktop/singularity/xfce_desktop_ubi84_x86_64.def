@@ -6,13 +6,14 @@ From: registry.access.redhat.com/ubi8:8.4-213
   /etc/yum.repos.d/redhat.repo
 
 %post
-  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
-  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
-  dnf --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
+  dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
-  dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
-  dnf install -y https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.3-1.el8.x86_64.rpm
+  dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
+  dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.3-1.el8.x86_64.rpm
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
   cd /opt
@@ -21,7 +22,7 @@ From: registry.access.redhat.com/ubi8:8.4-213
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
   #
-  # Packages for Fujitsu TCS
+  # For Fujitsu TCS
   dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all

@@ -6,10 +6,10 @@ From: registry.access.redhat.com/ubi8:8.6-943
   /etc/yum.repos.d/redhat.repo
   
 %post
-  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf -y install Lmod R
-  dnf -y install ant tar git bzip2 libxml2-devel pandoc sudo mlocate soci-sqlite3-devel
+  dnf --releasever=8.6 -y install Lmod R ant tar git bzip2 libxml2-devel pandoc sudo mlocate soci-sqlite3-devel
   wget https://github.com/rstudio/rstudio/archive/refs/tags/v2022.02.1+461.tar.gz
   tar xfz v2022.02.1+461.tar.gz
   cd rstudio-2022.02.1-461/dependencies/common/
@@ -26,10 +26,10 @@ From: registry.access.redhat.com/ubi8:8.6-943
   CXXFLAGS="-march=native" cmake .. -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/lib/rstudio-server
   # If too many cores, it will run out of memory.
   make -j 24; make install
- cd ../../
+  cd ../../
   rm -rf v2022.02.1+461.tar.gz rstudio-2022.02.1-461
   #
-  # Packages for Fujitsu TCS
+  # For Fujitsu TCS
   dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all

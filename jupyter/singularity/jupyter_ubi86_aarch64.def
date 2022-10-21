@@ -6,17 +6,18 @@ From: registry.access.redhat.com/ubi8:8.6-943
   /etc/yum.repos.d/redhat.repo
   
 %post
-  dnf -y install hostname gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl libcgroup boost boost-devel dnf-plugins-core wget hostname
-  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf -y install Lmod python39-pip python39-devel python39-numpy python39-scipy python3-matplotlib libffi-devel tar
-  dnf -y groupinstall "Development Tools"
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf --releasever=8.6 -y install hostname gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl libcgroup boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.6 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf --releasever=8.6 -y install Lmod python39-pip python39-devel python39-numpy python39-scipy python3-matplotlib libffi-devel tar
+  dnf --releasever=8.6 -y groupinstall "Development Tools"
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
-  dnf -y install nodejs
+  dnf --releasever=8.6 -y install nodejs
   pip3.9 install jupyterlab
   pip3.9 uninstall -y jupyterlab
   #
-  # Packages for Fujitsu TCS
+  # For Fujitsu TCS
   dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all

@@ -6,12 +6,13 @@ From: registry.access.redhat.com/ubi8:8.6-943
   /etc/yum.repos.d/redhat.repo
 
 %post
-  dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf -y install Lmod
+  dnf --releasever=8.6 -y install Lmod
   dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-arm64.rpm
   #
-  # Packages for Fujitsu TCS
+  # For Fujitsu TCS
   dnf install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all
