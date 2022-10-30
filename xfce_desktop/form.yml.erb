@@ -1,9 +1,6 @@
 <%-
-  groups=`groups`.split(" ")
-  delete_groups = ["f-op", "fugaku"]
-  delete_groups.each do |g|
-    groups.delete(g)
-  end
+  UNUSED_GROUPS = ["f-op", "fugaku", "isv"]
+  groups = `groups`.split(" ") - UNUSED_GROUPS
 -%>
 ---
 title: "Remote Desktop"
