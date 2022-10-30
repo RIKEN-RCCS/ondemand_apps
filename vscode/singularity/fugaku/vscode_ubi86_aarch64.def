@@ -13,9 +13,24 @@ From: registry.access.redhat.com/ubi8:8.6-943
   dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-arm64.rpm
   #
   # For Fujitsu TCS
-  dnf -y --releasever=8.6 install gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  cat <<EOF > /etc/yum.repos.d/Fugaku.repo
+[FUGAKU-AppStream]
+name=FUGAKU-AppStream
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/AppStream
+enabled=1
+gpgcheck=0
+
+[FUGAKU-BaseOS]
+name=FUGAKU-BaseOS
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
+enabled=1
+gpgcheck=0
+EOF
+  dnf --releasever=8.6 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg
+  dnf --releasever=8.6 -y install python39-devel
+  update-alternatives --set python /usr/bin/python3
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
-  rm -f /etc/yum.repos.d/redhat.repo
+  rm -f /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/Fugaku.repo
   

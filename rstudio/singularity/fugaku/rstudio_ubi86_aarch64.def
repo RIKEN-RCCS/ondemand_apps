@@ -25,13 +25,28 @@ From: registry.access.redhat.com/ubi8:8.6-943
   mkdir build; cd build
   CXXFLAGS="-march=native" cmake .. -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/lib/rstudio-server
   # If too many cores, it will run out of memory.
-  make -j 24; make install
+  make -j 30; make install
   cd ../../
   rm -rf v2022.02.1+461.tar.gz rstudio-2022.02.1-461
   #
   # For Fujitsu TCS
-  dnf --releasever=8.6 install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
+  cat <<EOF > /etc/yum.repos.d/Fugaku.repo
+[FUGAKU-AppStream]
+name=FUGAKU-AppStream
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/AppStream
+enabled=1
+gpgcheck=0
+
+[FUGAKU-BaseOS]
+name=FUGAKU-BaseOS
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
+enabled=1
+gpgcheck=0
+EOF
+  dnf --releasever=8.6 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg
+  dnf --releasever=8.6 -y install python39-devel
+  update-alternatives --set python /usr/bin/python3
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
-  rm -f /etc/yum.repos.d/redhat.repo
+  rm -f /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/Fugaku.repo

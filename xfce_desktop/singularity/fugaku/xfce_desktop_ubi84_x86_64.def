@@ -8,6 +8,7 @@ From: registry.access.redhat.com/ubi8:8.4-213
 %post
   rm -f /etc/yum.repos.d/ubi.repo
   dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.4 -y install libatomic # for pre-post environment
   dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
   dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
@@ -22,10 +23,8 @@ From: registry.access.redhat.com/ubi8:8.4-213
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
   #
-  # For Fujitsu TCS
-  dnf --releasever=8.4 install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
-  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
+
   

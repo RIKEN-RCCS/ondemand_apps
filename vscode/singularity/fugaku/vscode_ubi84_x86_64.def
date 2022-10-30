@@ -8,12 +8,10 @@ From: registry.access.redhat.com/ubi8:8.4-213
 %post
   rm -f /etc/yum.repos.d/ubi.repo
   dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.4 -y install libatomic # for pre-post environment
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.4 -y install Lmod
   dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-amd64.rpm
-  #
-  # For Fujitsu TCS
-  dnf --releasever=8.4 install -y gcc-c++ libstdc++-devel elfutils-devel elfutils-libelf-devel zlib-devel openssl-devel libatomic ncurses-compat-libs
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
