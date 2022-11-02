@@ -17,7 +17,7 @@ script:
   - "-n"
   - "<%= num_cores.blank? ? 1 : num_cores.to_i %>"
   <%- elsif cluster == "fugaku" -%>
-  - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
+  - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
   <%- if group.present? -%>
   - "-g"
   - "<%= group %>"

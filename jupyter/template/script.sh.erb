@@ -15,7 +15,7 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/jupyter/`arch`
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work
+export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
 CUDA_VERSION=11.5
@@ -26,7 +26,7 @@ fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
     export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
 done
-for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006; do
+for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006 /lib64/liblustreapi.so /run/psv; do
     [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
 done
 
@@ -34,5 +34,5 @@ done
 PYTHONUSERBASE=${SINGULARITYENV_XDG_DATA_HOME}
 export SINGULARITYENV_PYTHONUSERBASE=${PYTHONUSERBASE}
 export SINGULARITYENV_JUPYTER_DATA_DIR=${PYTHONUSERBASE}/share/jupyter
-time singularity exec ${NV_OPTION} ${IMAGE} pip3.9 install -U jupyterlab --user
-singularity exec ${NV_OPTION} ${IMAGE} ${PYTHONUSERBASE}/bin/jupyter-lab --config="${CONFIG_FILE}"
+time singularity run ${NV_OPTION} ${IMAGE} pip3.9 install -U jupyterlab --user
+singularity run ${NV_OPTION} ${IMAGE} ${PYTHONUSERBASE}/bin/jupyter-lab --config="${CONFIG_FILE}"

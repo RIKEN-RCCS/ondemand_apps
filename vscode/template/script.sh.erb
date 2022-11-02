@@ -18,12 +18,11 @@ echo "$(date): Running on compute node ${compute_node}:$port"
 
 echo "$(date): Started code-server"
 echo ""
-
-export LANG=C
+#export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${CODE_SERVER_DATAROOT}
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work
+export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
 CUDA_VERSION=11.5
@@ -34,11 +33,22 @@ fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
     export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
 done
-for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006; do
+for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006 /lib64/liblustreapi.so /run/psv; do
     [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
 done
 
-singularity exec ${NV_OPTION} ${IMAGE} code-server \
+# The default locale in terminal in code-server is UTF8, but Fujitsu TCS does not support UTF8.
+# Since the system setting is LANG=C, set it to take over.
+#[ ! -e ${CODE_SERVER_DATAROOT}/User ] && mkdir -p ${CODE_SERVER_DATAROOT}/User
+#if [ ! -e ${CODE_SERVER_DATAROOT}/User/settings.json ]; then
+#    cat <<EOF > ${CODE_SERVER_DATAROOT}/User/settings.json
+#{
+#"terminal.integrated.detectLocale": "off"
+#}
+#EOF
+#fi
+
+singularity run ${NV_OPTION} ${IMAGE} code-server \
     --auth="password" \
     --bind-addr="0.0.0.0:${port}" \
     --disable-telemetry \

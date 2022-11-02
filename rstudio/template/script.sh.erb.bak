@@ -13,7 +13,7 @@ setup_env () {
   export SINGULARITYENV_PATH="$PATH"
   # In Singularity 3.5.x it became necessary to explicitly pass LD_LIBRARY_PATH
   # to the singularity process
-#  export SINGULARITYENV_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+  export SINGULARITYENV_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
 }
 setup_env
 
@@ -24,9 +24,9 @@ umask 077
 sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   #!/usr/bin/env bash
 
+  export MODULEPATH="$MODULEPATH"
   # Log all output from this script
   export RSESSION_LOG_FILE="${PWD}/rsession.log"
-
   exec &>>"\${RSESSION_LOG_FILE}"
 
   # Launch the original command
@@ -41,7 +41,8 @@ export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/rstudio/`arch`
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
+export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server
+
 mkdir -p $SINGULARITYENV_TMPDIR/lib
 mkdir -p $SINGULARITYENV_TMPDIR/rstudio-server
 python3 -c 'from uuid import uuid4; print(uuid4())' > "$SINGULARITYENV_TMPDIR/rstudio-server/secure-cookie-key"
@@ -55,11 +56,11 @@ fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
   export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
 done
-for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006; do
+for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006 /lib64/liblustreapi.so /run/psv; do
     [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
 done
 
-singularity exec $NV_OPTION $IMAGE rserver \
+singularity run $NV_OPTION $IMAGE rserver \
  --www-port "${port}" \
  --auth-none 0 \
  --auth-pam-helper-path "${RSTUDIO_AUTH}" \

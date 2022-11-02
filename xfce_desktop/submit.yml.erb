@@ -18,7 +18,7 @@ script:
   - "-n"
   - "<%= num_cores.blank? ? 1 : num_cores.to_i %>"
   <%- elsif cluster == "fugaku" -%>
-  - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
+  - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
   <%- if group.present? -%>
   - "-g"
   - "<%= group %>"
@@ -32,12 +32,10 @@ batch_connect:
     #!/bin/bash
     export PATH="$PATH:/opt/TurboVNC/bin"
     export PATH="$PATH:/opt/ParaView/bin"
-    export LANG=C
     %s
     CTRSCRIPT
      
     export LANG=C
-
     ARCH=`arch`
     if [ $ARCH = aarch64 ]; then
       IMAGE=/home/apps/singularity/ondemand/xfce_desktop_ubi86_${ARCH}.sif
@@ -48,7 +46,7 @@ batch_connect:
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/xfce_desktop/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-    export SINGULARITY_BINDPATH=/data,/work
+    export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
     mkdir -p $SINGULARITYENV_TMPDIR
     NV_OPTION=""
     CUDA_VERSION=11.5
@@ -59,10 +57,10 @@ batch_connect:
     for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
         export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
     done
-    for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006; do
+    for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006 /lib64/liblustreapi.so /run/psv; do
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
 
     chmod +x <%= staged_root %>/container.sh
     singularity run ${NV_OPTION} ${IMAGE} <%= staged_root %>/container.sh
-    
+   
