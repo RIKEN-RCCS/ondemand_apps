@@ -10,7 +10,7 @@ From: registry.access.redhat.com/ubi8:8.4-213
   dnf --releasever=8.4 -y install hostname gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl libcgroup boost boost-devel dnf-plugins-core wget hostname
   dnf --releasever=8.4 -y install libatomic # for pre-post environment
   dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.4 -y install Lmod python39-pip python39-devel python39-numpy python39-scipy python3-matplotlib libffi-devel
+  dnf --releasever=8.4 -y install Lmod glibc-langpack-en python39-pip python39-devel python39-numpy python39-scipy python3-matplotlib libffi-devel
   dnf --releasever=8.4 -y groupinstall "Development Tools"
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
