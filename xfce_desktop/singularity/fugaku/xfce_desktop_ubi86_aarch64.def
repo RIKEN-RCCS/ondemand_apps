@@ -10,6 +10,7 @@ From: registry.access.redhat.com/ubi8:8.6-943
   dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.6 -y install xorg-x11-apps evince glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs
+  dnf --releasever=8.6 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins
   dnf --releasever=8.6 -y --skip-broken groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
