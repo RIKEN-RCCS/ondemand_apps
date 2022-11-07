@@ -9,7 +9,7 @@ From: registry.access.redhat.com/ubi8:8.4-213
   rm -f /etc/yum.repos.d/ubi.repo
   dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf --releasever=8.4 -y install libatomic # for pre-post environment
-  dnf --releasever=8.4 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins
+  dnf --releasever=8.4 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16
   dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs
   dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'

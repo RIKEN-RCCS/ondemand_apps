@@ -5,9 +5,9 @@ From: rockylinux:8.6
 %post
         dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel
         dnf -y install epel-release dnf-plugins-core wget
-	dnf -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins
+	dnf -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16
         dnf config-manager --set-enabled powertools
-        dnf -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
+        dnf -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs 
         #
         dnf --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
         pip2 install ts
