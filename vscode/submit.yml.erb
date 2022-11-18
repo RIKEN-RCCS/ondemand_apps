@@ -1,7 +1,7 @@
 script:
   job_name: ood_vscode
   <%- if cluster == "prepost" then -%>
-  queue_name: <%= custom_queue %>
+  queue_name: <%= queue %>
   gpus_per_node: <%= gpus_per_node %>
   <%- end -%>
   <%- if email.present? -%>
@@ -9,20 +9,43 @@ script:
   email_on_started: true
   <%- end -%>
   native:
-  <%- if cluster == "prepost" then -%>
-  <%- if required_memory.present? -%>
-  - "--mem"
-  - "<%= required_memory %>G"
-  <%- end -%> 
-  - "-n"
-  - "<%= num_cores.blank? ? 1 : num_cores.to_i %>"
-  <%- elsif cluster == "fugaku" -%>
-  - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
-  <%- if group.present? -%>
-  - "-g"
-  - "<%= group %>"
-  <%- end -%>
+  <%- if cluster == "fugaku" -%>
+    - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
+    - "-L"
+    - "\"elapse=<%= fugaku_num_hours %>:00:00\""
+    - "-g"
+    - "<%= group %>"
+  <%- elsif cluster == "prepost" then -%>
+    <%- if queue == "gpu1" -%>
+      - "-t"
+      - "<%= prepost1_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu1_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu1_required_memory %>G"
+    <%- elsif queue == "gpu2" then -%>
+      - "-t"
+      - "<%= prepost2_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu2_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu2_required_memory %>G"
+    <%- elsif queue == "mem1" then -%>
+      - "-t"
+      - "<%= prepost1_num_hours %>:00:00"
+      - "-n"
+      - <%= mem1_num_cores.to_i %>
+      - "--mem"
+      - "<%= mem1_required_memory %>G"
+    <%- elsif queue == "mem2" then -%>
+      - "-t"
+      - "<%= prepost2_num_hours %>:00:00"
+      - "-n"
+      - <%= mem2_num_cores.to_i %>
+      - "--mem"
+      - "<%= mem2_required_memory %>G"
+    <%- end -%>
   <%- end -%>
 batch_connect:
   template: "basic"
-    
+  
