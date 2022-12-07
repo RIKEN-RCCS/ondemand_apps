@@ -7,7 +7,7 @@ From: rockylinux:8.6
         dnf -y install epel-release dnf-plugins-core wget
         dnf config-manager --set-enabled powertools
         dnf -y install xorg-x11-apps hostname evince eog glx-utils systemd-libs sssd python2-pip Lmod xdg-user-dirs
-	dnf -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16
+	dnf -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
         #
         dnf --skip-broken -y groupinstall 'Development Tools' 'Base' 'Infiniband Support' 'Xfce' 'base-x' 'Internet Browser'
         pip2 install ts
