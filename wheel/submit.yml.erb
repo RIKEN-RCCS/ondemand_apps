@@ -7,7 +7,14 @@ script:
   email_on_started: true
   <%- end -%>
   native:
-    <%- if queue == "gpu1" -%>
+    <%- if queue == "wheel" -%>
+      - "-t"
+      - "<%= prepost_wheel_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu1_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu1_required_memory %>G"
+    <%- elsif queue == "gpu1" -%>
       - "-t"
       - "<%= prepost1_num_hours %>:00:00"
       - "-n"
