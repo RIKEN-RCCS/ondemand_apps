@@ -2,22 +2,8 @@
 set +x
 SIF=/home/apps/singularity/ondemand/wheel_debian10.13_x86_64.sif
 
-# Benchmark info
-echo "TIMING - Starting main script at: $(date)"
-
 # Set working directory to home directory
 cd "${HOME}"
-
-<%- unless context.modules.blank? -%>
-# Purge the module environment to avoid conflicts
-module purge
-
-# Load the require modules
-module load <%= context.modules %>
-
-# List loaded modules
-module list
-<%- end -%>
 
 # Benchmark info
 echo "TIMING - Starting WHEEL at: $(date)"

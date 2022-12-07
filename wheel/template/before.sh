@@ -35,6 +35,15 @@ cd ${config_dir}
 wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/server.json
 wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/jobScheduler.json
 
+######################
+# When /home directory is nfs-mounted with lookupcache=none option,
+# the error "/usr/bin/env: bad interpreter: Text file busy" occurs.
+# This is because that the script.sh is not finished being copied in a compute node.
+# To prevent that, change to a file with a different name in the compute node.
+######################
+cp script.sh tmp.sh
+mv tmp.sh script.sh
+
 #rewrite port
 sed -i -e "/port/c \"port\": ${port}," server.json
 echo port number is changed to ${port}
