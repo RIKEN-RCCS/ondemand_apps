@@ -1,0 +1,7 @@
+---
+name: WHEEL Workflow Management Tool
+category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+description: |
+  This app will launch a WHEEL server which is a workflow management tool. See https://github.com/RIKEN-RCCS/OPEN-WHEEL.

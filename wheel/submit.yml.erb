@@ -1,0 +1,41 @@
+script:
+  job_name: ood_wheel
+  queue_name: <%= queue %>
+  gpus_per_node: <%= gpus_per_node %>
+  <%- if email.present? -%>
+  email: <%= email %>
+  email_on_started: true
+  <%- end -%>
+  native:
+    <%- if queue == "gpu1" -%>
+      - "-t"
+      - "<%= prepost1_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu1_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu1_required_memory %>G"
+    <%- elsif queue == "gpu2" then -%>
+      - "-t"
+      - "<%= prepost2_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu2_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu2_required_memory %>G"
+    <%- elsif queue == "mem1" then -%>
+      - "-t"
+      - "<%= prepost1_num_hours %>:00:00"
+      - "-n"
+      - <%= mem1_num_cores.to_i %>
+      - "--mem"
+      - "<%= mem1_required_memory %>G"
+    <%- elsif queue == "mem2" then -%>
+      - "-t"
+      - "<%= prepost2_num_hours %>:00:00"
+      - "-n"
+      - <%= mem2_num_cores.to_i %>
+      - "--mem"
+      - "<%= mem2_required_memory %>G"
+    <%- end -%>
+batch_connect:
+  template: "basic"
+
