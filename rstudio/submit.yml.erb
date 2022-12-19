@@ -44,6 +44,13 @@ script:
       - <%= mem2_num_cores.to_i %>
       - "--mem"
       - "<%= mem2_required_memory %>G"
+    <%- elsif queue == "wheel" then -%>
+      - "-t"
+      - "<%= prepost_wheel_num_hours %>:00:00"
+      - "-n"
+      - <%= gpu1_num_cores.to_i %>
+      - "--mem"
+      - "<%= gpu1_required_memory %>G"
     <%- end -%>
   <%- end -%>
 batch_connect:
