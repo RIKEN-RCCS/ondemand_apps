@@ -25,38 +25,70 @@ attributes:
     label: Queue
     widget: "select"
     options:
-      - [ "fugaku", "fugaku", data-set-cluster: "fugaku", data-hide-cluster: true,
-          data-hide-prepost1-num-hours: true, data-hide-prepost2-num-hours: true,
+      - [ "fugaku", "fugaku", data-set-cluster: "fugaku",
+          data-hide-cluster: true,
+          data-hide-prepost1-num-hours: true,
+          data-hide-prepost2-num-hours: true,
           data-hide-prepost-wheel-num-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-gpu1-num-cores: true, data-hide-gpu2-num-cores: true, data-hide-mem1-num-cores: true, data-hide-mem2-num-cores: true,
-          data-hide-gpu1-required-memory: true, data-hide-gpu2-required-memory: true, data-hide-mem1-required-memory: true, data-hide-mem2-required-memory: true ]
-      - [ "prepost-gpu1", "gpu1", data-set-cluster: "prepost", data-hide-cluster: true,
+          data-hide-gpu1-num-cores: true,
+          data-hide-gpu2-num-cores: true,
+          data-hide-mem1-num-cores: true,
+          data-hide-mem2-num-cores: true,
+          data-hide-gpu1-required-memory: true,
+          data-hide-gpu2-required-memory: true,
+          data-hide-mem1-required-memory: true,
+          data-hide-mem2-required-memory: true ]
+      - [ "prepost-gpu1", "gpu1", data-set-cluster: "prepost",
+          data-hide-cluster: true,
           data-hide-group: true,
-	  data-hide-fugaku-num-hours: true, data-hide-prepost2-num-hours: true,
+	  data-hide-fugaku-num-hours: true,
+          data-hide-prepost2-num-hours: true,
           data-hide-prepost-wheel-num-hours: true,
-          data-hide-gpu2-num-cores: true, data-hide-mem1-num-cores: true, data-hide-mem2-num-cores: true,
-          data-hide-gpu2-required-memory: true, data-hide-mem1-required-memory: true, data-hide-mem2-required-memory: true ]
-      - [ "prepost-gpu2", "gpu2", data-set-cluster: "prepost", data-hide-cluster: true,
+          data-hide-gpu2-num-cores: true,
+          data-hide-mem1-num-cores: true,
+          data-hide-mem2-num-cores: true,
+          data-hide-gpu2-required-memory: true,
+          data-hide-mem1-required-memory: true,
+          data-hide-mem2-required-memory: true ]
+      - [ "prepost-gpu2", "gpu2", data-set-cluster: "prepost",
+          data-hide-cluster: true,
           data-hide-group: true,
-          data-hide-fugaku-num-hours: true, data-hide-prepost1-num-hours: true,
+          data-hide-fugaku-num-hours: true,
+          data-hide-prepost1-num-hours: true,
           data-hide-prepost-wheel-num-hours: true,
-          data-hide-gpu1-num-cores: true, data-hide-mem1-num-cores: true, data-hide-mem2-num-cores: true,
-          data-hide-gpu1-required-memory: true, data-hide-mem1-required-memory: true, data-hide-mem2-required-memory: true ]
-      - [ "prepost-mem1", "mem1", data-set-cluster: "prepost", data-hide-cluster: true,
+          data-hide-gpu1-num-cores: true,
+          data-hide-mem1-num-cores: true,
+          data-hide-mem2-num-cores: true,
+          data-hide-gpu1-required-memory: true,
+          data-hide-mem1-required-memory: true,
+          data-hide-mem2-required-memory: true ]
+      - [ "prepost-mem1", "mem1", data-set-cluster: "prepost",
+          data-hide-cluster: true,
           data-hide-group: true,
-          data-hide-fugaku-num-hours: true, data-hide-prepost2-num-hours: true,
+          data-hide-fugaku-num-hours: true,
+          data-hide-prepost2-num-hours: true,
           data-hide-prepost-wheel-num-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-gpu1-num-cores: true, data-hide-gpu2-num-cores: true, data-hide-mem2-num-cores: true,
-          data-hide-gpu1-required-memory: true, data-hide-gpu2-required-memory: true, data-hide-mem2-required-memory: true ]
-      - [ "prepost-mem2", "mem2", data-set-cluster: "prepost", data-hide-cluster: true,
+          data-hide-gpu1-num-cores: true,
+          data-hide-gpu2-num-cores: true,
+          data-hide-mem2-num-cores: true,
+          data-hide-gpu1-required-memory: true,
+          data-hide-gpu2-required-memory: true,
+          data-hide-mem2-required-memory: true ]
+      - [ "prepost-mem2", "mem2", data-set-cluster: "prepost",
+          data-hide-cluster: true,
           data-hide-group: true,
-          data-hide-fugaku-num-hours: true, data-hide-prepost1-num-hours: true,
+          data-hide-fugaku-num-hours: true,
+          data-hide-prepost1-num-hours: true,
           data-hide-prepost-wheel-num-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-gpu1-num-cores: true, data-hide-gpu2-num-cores: true, data-hide-mem1-num-cores: true,
-          data-hide-gpu1-required-memory: true, data-hide-gpu2-required-memory: true, data-hide-mem1-required-memory: true ]
+          data-hide-gpu1-num-cores: true,
+          data-hide-gpu2-num-cores: true,
+          data-hide-mem1-num-cores: true,
+          data-hide-gpu1-required-memory: true,
+          data-hide-gpu2-required-memory: true,
+          data-hide-mem1-required-memory: true ]
       - [ "prepost-wheel (reserved)", "wheel", data-set-cluster: "prepost",
           data-hide-cluster: true,
           data-hide-group: true,
@@ -99,7 +131,7 @@ attributes:
     step: 1
   prepost_wheel_num_hours:
     widget: "number_field"
-    label: "Elapsed Time (1 - 7*24 hours)"
+    label: "Elapsed Time (1 - 168 hours)"
     value: 6
     min: 6
     max: 168
