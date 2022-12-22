@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: registry.access.redhat.com/ubi8:8.6-943
+From: redhat/ubi8:8.6-943
 
 %files
   /etc/pki/entitlement /etc/pki/
