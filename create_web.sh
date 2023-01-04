@@ -60,14 +60,12 @@ cat <<EOF >> $filename
           chart: {
               title: 'Fugaku',
           },
-	  bars: 'horizontal',
         };
 
         var prepost_options = {
           chart: {
               title: 'Prepost',
           },
-          bars: 'horizontal',
         };
 
  	var fugaku_chart = new google.charts.Bar(document.getElementById('fugaku_barchart_material'));
@@ -78,16 +76,8 @@ cat <<EOF >> $filename
     </script>
   </head>
   <body>
-    <table border="1" bordercolor="#333333" cellpadding="10" cellspacing="0">
-      <tr>
-        <td>
-          <div id="fugaku_barchart_material" style="width: 800px; height: 500px;"></div>
-        </td>
-        <td>
-          <div id="prepost_barchart_material" style="width: 800px; height: 500px;"></div>	
-        </td>
-      </tr>
-    </table>
+  <div id="fugaku_barchart_material"  style="height: 500px;"></div>
+  <div id="prepost_barchart_material" style="height: 500px;"></div>	
   </body>
 </html>
 EOF
