@@ -11,7 +11,7 @@ cat <<EOF > $filename
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Number of application launches</title>
+    <title>Number of times the application was executed</title>
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -59,7 +59,6 @@ cat <<EOF >> $filename
         var fugaku_options = {
           chart: {
               title: 'Fugaku',
-	      subtitle: 'Number of application launches'
           },
 	  bars: 'horizontal',
         };
@@ -67,7 +66,6 @@ cat <<EOF >> $filename
         var prepost_options = {
           chart: {
               title: 'Prepost',
-              subtitle: 'Number of application launches'
           },
           bars: 'horizontal',
         };
