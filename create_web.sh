@@ -20,7 +20,7 @@ cat <<EOF > $filename
 
       function drawChart() {
         var fugaku_data = google.visualization.arrayToDataTable([
-          ['Year-Month', 'Remote Desktop', 'Jupyter', 'Rstudio', 'VSCode', 'Wheel'],
+          ['Year-Month', 'Remote Desktop', 'Jupyter', 'Rstudio', 'VSCode'],
 EOF
 
 d="2022-09-01"
@@ -31,8 +31,7 @@ while [[ "$d" < $today ]]; do
     jupyter=`grep ${month} ood_jupyter.pjsub.log | wc -l`
     vscode=`grep ${month} ood_vscode.pjsub.log | wc -l`
     rstudio=`grep ${month} ood_rstudio.pjsub.log | wc -l`
-    wheel=`grep ${month} ood_wheel.pjsub.log | wc -l`
-    echo "['$month', $desktop, $jupyter, $vscode, $rstudio, $wheel]," >> $filename
+    echo "['$month', $desktop, $jupyter, $vscode, $rstudio]," >> $filename
     d=$(date +%F -d "$d 1 month")
 done
 
