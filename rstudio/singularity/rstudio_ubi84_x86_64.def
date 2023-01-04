@@ -1,19 +1,18 @@
 Bootstrap: docker
-From: registry.access.redhat.com/ubi8:8.4-213
+From: redhat/ubi8:8.4-213
 
 %files
   /etc/pki/entitlement /etc/pki/
   /etc/yum.repos.d/redhat.repo
-
+  
 %post
   rm -f /etc/yum.repos.d/ubi.repo
   dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf --releasever=8.4 -y install libatomic # for pre-post environment
-  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.4 -y install Lmod glibc-langpack-en
-  dnf -y install https://github.com/coder/code-server/releases/download/v3.10.2/code-server-3.10.2-amd64.rpm
+  dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf --releasever=8.4 -y install Lmod R glibc-langpack-en
+  dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2022.02.1-461-x86_64.rpm
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
-  
