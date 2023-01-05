@@ -25,6 +25,7 @@ EOF
 
 d="2022-09-01"
 today=`date "+%Y-%m-%d"`
+num=0
 while [[ "$d" < $today ]]; do
     month=`echo $d | awk -F- '{print $1"-"$2}'`
     desktop=`grep ${month} ood_desktop.pjsub.log | wc -l`
@@ -33,7 +34,10 @@ while [[ "$d" < $today ]]; do
     rstudio=`grep ${month} ood_rstudio.pjsub.log | wc -l`
     echo "['$month', $desktop, $jupyter, $vscode, $rstudio]," >> $filename
     d=$(date +%F -d "$d 1 month")
+    num=$(($num + 1))
 done
+width=$(($num * 65))
+width=$(($width + 200))
 
 cat <<EOF >> $filename
         ]);
@@ -76,8 +80,8 @@ cat <<EOF >> $filename
     </script>
   </head>
   <body>
-  <div id="fugaku_barchart_material"  style="height: 500px;"></div>
-  <div id="prepost_barchart_material" style="height: 500px;"></div>	
+  <div id="fugaku_barchart_material"  style="width: ${width}px; height: 500px;"></div>
+  <div id="prepost_barchart_material" style="width: ${width}px; height: 500px;"></div>	
   </body>
 </html>
 EOF
@@ -85,4 +89,3 @@ EOF
 for a in ood_desktop ood_jupyter ood_vscode ood_rstudio ood_wheel; do
     rm -f ${a}.log ${a}.pjsub.log ${a}.sbatch.log
 done
-
