@@ -81,7 +81,7 @@ cat <<EOF >> $filename
   </head>
   <body>
   <div id="fugaku_barchart_material"  style="width: ${width}px; height: 500px;"></div>
-  <div id="prepost_barchart_material" style="width: ${width}px; height: 500px;"></div>	
+  <div id="prepost_barchart_material" style="width: ${width}px; height: 500px;"></div>
   </body>
 </html>
 EOF
